@@ -1,1 +1,1 @@
-# RBE-595-DL
+# Advanced Deep Learning
