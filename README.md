@@ -1,2 +1,1 @@
-# AdvancedDeepLearning
-AdvancedDeepLearning
+# RBE-595-DL
