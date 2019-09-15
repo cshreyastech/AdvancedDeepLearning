@@ -6,8 +6,10 @@
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.wrappers.scikit_learn import KerasClassifier
-from sklearn.cross_validation import StratifiedKFold
-from sklearn.cross_validation import cross_val_score
+#from sklearn.cross_validation import StratifiedKFold
+from sklearn.model_selection import StratifiedKFold
+#from sklearn.cross_validation import cross_val_score
+from sklearn.model_selection import cross_val_score
 import numpy
 
 # Function to create model, required for KerasClassifier
@@ -32,6 +34,7 @@ Y = dataset[:,8]
 # create model
 model = KerasClassifier(build_fn=create_model, nb_epoch=150, batch_size=10, verbose=0)
 # evaluate using 10-fold cross validation
-kfold = StratifiedKFold(y=Y, n_folds=10, shuffle=True, random_state=seed)
+#kfold = StratifiedKFold(y=Y, n_folds=10, shuffle=True, random_state=seed)
+kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=seed)
 results = cross_val_score(model, X, Y, cv=kfold)
 print(results.mean())

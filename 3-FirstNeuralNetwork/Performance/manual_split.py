@@ -5,7 +5,8 @@
 # MLP with manual validation set
 from keras.models import Sequential
 from keras.layers import Dense
-from sklearn.cross_validation import train_test_split
+#from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 import numpy
 # fix random seed for reproducibility
 seed = 7

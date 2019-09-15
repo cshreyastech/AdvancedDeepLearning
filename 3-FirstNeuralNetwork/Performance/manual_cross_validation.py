@@ -5,7 +5,9 @@
 # MLP for Pima Indians Dataset with 10-fold cross validation
 from keras.models import Sequential
 from keras.layers import Dense
-from sklearn.cross_validation import StratifiedKFold
+#from sklearn.cross_validation import StratifiedKFold
+from sklearn.model_selection import StratifiedKFold
+
 import numpy
 # fix random seed for reproducibility
 seed = 7
@@ -16,9 +18,12 @@ dataset = numpy.loadtxt("pima-indians-diabetes.csv", delimiter=",")
 X = dataset[:,0:8]
 Y = dataset[:,8]
 # define 10-fold cross validation test harness
-kfold = StratifiedKFold(y=Y, n_folds=10, shuffle=True, random_state=seed)
+#kfold = StratifiedKFold(y=Y, n_folds=10, shuffle=True, random_state=seed)
+kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=seed)
+kfold.get_n_splits(X, Y)
 cvscores = []
-for i, (train, test) in enumerate(kfold):
+#for i, (train, test) in enumerate(kfold):
+for train, test in kfold.split(X, Y):
   # create model
 	model = Sequential()
 	model.add(Dense(12, input_dim=8, init='uniform', activation='relu'))
