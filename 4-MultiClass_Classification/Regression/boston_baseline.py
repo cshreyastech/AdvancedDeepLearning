@@ -8,8 +8,8 @@ import pandas
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.wrappers.scikit_learn import KerasRegressor
-from sklearn.cross_validation import cross_val_score
-from sklearn.cross_validation import KFold
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import KFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 # load dataset
@@ -32,6 +32,7 @@ seed = 7
 numpy.random.seed(seed)
 # evaluate model with standardized dataset
 estimator = KerasRegressor(build_fn=baseline_model, nb_epoch=100, batch_size=5, verbose=0)
-kfold = KFold(n=len(X), n_folds=10, random_state=seed)
+#kfold = KFold(n=len(X), n_folds=10, random_state=seed)
+kfold = KFold(n_splits=len(X), random_state=None, shuffle=True)
 results = cross_val_score(estimator, X, Y, cv=kfold)
 print("Baseline: %.2f (%.2f) MSE" % (results.mean(), results.std()))

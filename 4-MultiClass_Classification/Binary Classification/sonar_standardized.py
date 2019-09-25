@@ -8,9 +8,9 @@ import pandas
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.wrappers.scikit_learn import KerasClassifier
-from sklearn.cross_validation import cross_val_score
+from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import LabelEncoder
-from sklearn.cross_validation import StratifiedKFold
+from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 # fix random seed for reproducibility
@@ -41,6 +41,6 @@ estimators = []
 estimators.append(('standardize', StandardScaler()))
 estimators.append(('mlp', KerasClassifier(build_fn=create_baseline, nb_epoch=100, batch_size=5, verbose=0)))
 pipeline = Pipeline(estimators)
-kfold = StratifiedKFold(y=encoded_Y, n_folds=10, shuffle=True, random_state=seed)
+kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=seed)
 results = cross_val_score(pipeline, X, encoded_Y, cv=kfold)
 print("Standardized: %.2f%% (%.2f%%)" % (results.mean()*100, results.std()*100))
