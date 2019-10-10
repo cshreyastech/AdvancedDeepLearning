@@ -13,7 +13,8 @@ from keras.utils import np_utils
 seed = 7
 numpy.random.seed(seed)
 # load data
-(X_train, y_train), (X_test, y_test) = mnist.load_data()
+#(X_train, y_train), (X_test, y_test) = mnist.load_data()
+(X_train, y_train), (X_test, y_test) = mnist.load_data(path='mnist.npz')
 # flatten 28*28 images to a 784 vector for each image
 num_pixels = X_train.shape[1] * X_train.shape[2]
 X_train = X_train.reshape(X_train.shape[0], num_pixels).astype('float32')

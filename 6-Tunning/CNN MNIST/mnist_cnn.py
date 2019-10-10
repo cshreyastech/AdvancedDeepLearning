@@ -16,10 +16,15 @@ from keras.utils import np_utils
 seed = 7
 numpy.random.seed(seed)
 # load data
-(X_train, y_train), (X_test, y_test) = mnist.load_data()
+#(X_train, y_train), (X_test, y_test) = mnist.load_data()
+(X_train, y_train), (X_test, y_test) = mnist.load_data(path='mnist.npz')
+print(X_train.shape)
+print(X_test.shape)
 # reshape to be [samples][channels][width][height]
-X_train = X_train.reshape(X_train.shape[0], 1, 28, 28).astype('float32')
-X_test = X_test.reshape(X_test.shape[0], 1, 28, 28).astype('float32')
+#X_train = X_train.reshape(X_train.shape[0], 1, 28, 28).astype('float32')
+#X_test = X_test.reshape(X_test.shape[0], 1, 28, 28).astype('float32')
+X_train = X_train.reshape(X_train.shape[0], 28, 28, 1).astype('float32')
+X_test = X_test.reshape(X_test.shape[0], 28, 28, 1).astype('float32')
 # normalize inputs from 0-255 to 0-1
 X_train = X_train / 255
 X_test = X_test / 255
@@ -31,7 +36,11 @@ num_classes = y_test.shape[1]
 def baseline_model():
 	# create model
 	model = Sequential()
-	model.add(Convolution2D(32, 5, 5, border_mode='valid', input_shape=(1, 28, 28), activation='relu'))
+	#model.add(Convolution2D(32, 5, 5, border_mode='valid', input_shape=(1, 28, 28), activation='relu'))
+	model.add(Convolution2D(32, 5, 5, border_mode='valid', input_shape=(28, 28, 1), activation='relu'))
+	model.add(MaxPooling2D(pool_size=(2, 2)))
+	model.add(Dropout(0.2))
+	model.add(Convolution2D(64, 3, 3, border_mode='valid', input_shape=(32, 5, 5), activation='relu'))
 	model.add(MaxPooling2D(pool_size=(2, 2)))
 	model.add(Dropout(0.2))
 	model.add(Flatten())
