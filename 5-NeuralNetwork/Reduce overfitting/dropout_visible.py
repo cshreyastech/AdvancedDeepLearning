@@ -11,11 +11,13 @@ from keras.layers import Dropout
 from keras.wrappers.scikit_learn import KerasClassifier
 from keras.constraints import maxnorm
 from keras.optimizers import SGD
-from sklearn.cross_validation import cross_val_score
+#from sklearn.cross_validation import cross_val_score
+from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import LabelEncoder
-from sklearn.cross_validation import StratifiedKFold
+from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import StandardScaler
-from sklearn.grid_search import GridSearchCV
+#from sklearn.grid_search import GridSearchCV
+from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 # fix random seed for reproducibility
 seed = 7
@@ -49,6 +51,7 @@ estimators = []
 estimators.append(('standardize', StandardScaler()))
 estimators.append(('mlp', KerasClassifier(build_fn=create_model, nb_epoch=300, batch_size=16, verbose=0)))
 pipeline = Pipeline(estimators)
-kfold = StratifiedKFold(y=encoded_Y, n_folds=10, shuffle=True, random_state=seed)
+#kfold = StratifiedKFold(y=encoded_Y, n_folds=10, shuffle=True, random_state=seed)
+kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=seed)
 results = cross_val_score(pipeline, X, encoded_Y, cv=kfold)
 print("Visible: %.2f%% (%.2f%%)" % (results.mean()*100, results.std()*100))

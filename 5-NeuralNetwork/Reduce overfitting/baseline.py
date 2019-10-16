@@ -35,15 +35,16 @@ encoded_Y = encoder.transform(Y)
 
 # baseline
 def create_baseline():
-	# create model
-	model = Sequential()
-	model.add(Dense(60, input_dim=60, init='normal', activation='relu'))
-	model.add(Dense(30, init='normal', activation='relu'))
-	model.add(Dense(1, init='normal', activation='sigmoid'))
-	# Compile model
-	sgd = SGD(lr=0.01, momentum=0.8, decay=0.0, nesterov=False)
-	model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy'])
-	return model
+    # create model
+    model = Sequential()
+    model.add(Dense(60, input_dim=60, init='normal', activation='relu'))
+    #model.add(Dropout(0.2))
+    model.add(Dense(30, init='normal', activation='relu'))
+    model.add(Dense(1, init='normal', activation='sigmoid'))
+    # Compile model
+    sgd = SGD(lr=0.01, momentum=0.8, decay=0.0, nesterov=False)
+    model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy'])
+    return model
 
 numpy.random.seed(seed)
 estimators = []
