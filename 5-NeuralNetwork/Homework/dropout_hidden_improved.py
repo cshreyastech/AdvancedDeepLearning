@@ -43,18 +43,18 @@ def create_model():
     model.add(Dropout(0.2))
     #model.add(Dense(30, init='normal', activation='relu', W_constraint=maxnorm(3)))
     model.add(Dense(30, init='normal', W_constraint=maxnorm(3)))
-    model.add(LeakyReLU(alpha=0.05))
+    model.add(LeakyReLU(alpha=0.01))
     model.add(Dropout(0.2))
     model.add(Dense(1, init='normal', activation='sigmoid'))
     # Compile model
-    sgd = SGD(lr=0.1, momentum=0.9, decay=0, nesterov=False)
+    sgd = SGD(lr=0.1, momentum=0.9, decay=0.0, nesterov=False)
     model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy'])
     return model
 
 numpy.random.seed(seed)
 estimators = []
 estimators.append(('standardize', StandardScaler()))
-estimators.append(('mlp', KerasClassifier(build_fn=create_model, nb_epoch=500, batch_size=32, verbose=0)))
+estimators.append(('mlp', KerasClassifier(build_fn=create_model, nb_epoch=300, batch_size=16, verbose=0)))
 pipeline = Pipeline(estimators)
 #kfold = StratifiedKFold(y=encoded_Y, n_folds=10, shuffle=True, random_state=seed)
 kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=seed)
