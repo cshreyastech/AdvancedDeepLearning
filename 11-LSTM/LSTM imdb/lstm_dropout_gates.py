@@ -12,12 +12,27 @@ from keras.layers.embeddings import Embedding
 from keras.preprocessing import sequence
 from theano.tensor.shared_randomstreams import RandomStreams
 # fix random seed for reproducibility
-numpy.random.seed(7)
-srng = RandomStreams(7)
+# fix random seed for reproducibility
+seed = 7
+numpy.random.seed(seed)
 # load the dataset but only keep the top n words, zero the rest
 top_words = 5000
 test_split = 0.33
-(X_train, y_train), (X_test, y_test) = imdb.load_data(nb_words=top_words, test_split=test_split)
+#(X_train, y_train), (X_test, y_test) = imdb.load_data(num_words=top_words, test_split=test_split)
+
+import numpy as np
+# save np.load
+np_load_old = np.load
+
+# modify the default parameters of np.load
+np.load = lambda *a,**k: np_load_old(*a, allow_pickle=True, **k)
+
+# call load_data with allow_pickle implicitly set to true
+(X_train, y_train), (X_test, y_test) = imdb.load_data(num_words=top_words)
+
+# restore np.load for future normal usage
+np.load = np_load_old
+
 # truncate and pad input sequences
 max_review_length = 500
 X_train = sequence.pad_sequences(X_train, maxlen=max_review_length)
