@@ -30,7 +30,7 @@ for i in range(num_inputs):
 	sequence_out = alphabet[end + 1]
 	dataX.append([char_to_int[char] for char in sequence_in])
 	dataY.append(char_to_int[sequence_out])
-	print sequence_in, '->', sequence_out
+	print(sequence_in, '->', sequence_out)
 # convert list of lists to array and pad sequences if needed
 X = pad_sequences(dataX, maxlen=max_len, dtype='float32')
 # reshape X to be [samples, time steps, features]
@@ -60,4 +60,4 @@ for i in range(20):
 	index = numpy.argmax(prediction)
 	result = int_to_char[index]
 	seq_in = [int_to_char[value] for value in pattern]
-	print seq_in, "->", result
+	print(seq_in, "->", result)
