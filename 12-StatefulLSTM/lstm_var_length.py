@@ -20,7 +20,7 @@ char_to_int = dict((c, i) for i, c in enumerate(alphabet))
 int_to_char = dict((i, c) for i, c in enumerate(alphabet))
 # prepare the dataset of input to output pairs encoded as integers
 num_inputs = 1000
-max_len = 5
+max_len = 8
 dataX = []
 dataY = []
 for i in range(num_inputs):
@@ -45,7 +45,7 @@ model = Sequential()
 model.add(LSTM(32, input_shape=(X.shape[1], 1)))
 model.add(Dense(y.shape[1], activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-model.fit(X, y, nb_epoch=500, batch_size=batch_size, verbose=2)
+model.fit(X, y, nb_epoch=600, batch_size=batch_size, verbose=2)
 # summarize performance of the model
 scores = model.evaluate(X, y, verbose=0)
 print("Model Accuracy: %.2f%%" % (scores[1]*100))
